@@ -1,5 +1,6 @@
 package org.event.springangular.web;
 
+import org.event.springangular.dtos.NewPayementDTO;
 import org.event.springangular.entities.Payement;
 import org.event.springangular.entities.PayementStatus;
 import org.event.springangular.entities.PayementType;
@@ -39,7 +40,7 @@ public class PayementRestController {
    public List<Payement> allPayements(){
             return payementRepository.findAll();
    }
-    @GetMapping(path="/students/{code}/payements")
+    @GetMapping(path="/student-details/{code}")
     public List<Payement> PayementsByStudent(@PathVariable String code){
         return payementRepository.findByStudentCode(code);
     }
@@ -73,9 +74,9 @@ public class PayementRestController {
         return this.payementService.updatepayement(payementStatus,id);
     }
     @PostMapping(path ="/payements",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Payement savePayement(@RequestParam MultipartFile file, LocalDate date,double amount,PayementType type,String studentCode) throws IOException {
+    public Payement savePayement(@RequestParam("file") MultipartFile file, NewPayementDTO newPayementDTO) throws IOException {
 
-        return this.payementService.savePayement(file,date,amount,type,studentCode);
+        return this.payementService.savePayement(file,newPayementDTO);
     }
     @GetMapping(path ="/payementFile/{payementId}",produces = MediaType.APPLICATION_PDF_VALUE)
     public byte[] getPayementFile(@PathVariable Long payementId) throws IOException {

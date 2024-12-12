@@ -1,5 +1,6 @@
 package org.event.springangular.services;
 
+import org.event.springangular.dtos.NewPayementDTO;
 import org.event.springangular.entities.Payement;
 import org.event.springangular.entities.PayementStatus;
 import org.event.springangular.entities.PayementType;
@@ -33,7 +34,7 @@ public class PayementService {
         this.studentRepository = studentRepository;
         this.payementRepository = payementRepository;
     }
-    public Payement savePayement(MultipartFile file, LocalDate date, double amount, PayementType type, String studentCode) throws IOException {
+    public Payement savePayement(MultipartFile file, NewPayementDTO newPayementDTO) throws IOException {
         Path folderPath= Paths.get(System.getProperty("user.home"),"mer-data","payements");
         if(!Files.exists(folderPath)){
             Files.createDirectories(folderPath);
@@ -41,12 +42,12 @@ public class PayementService {
         String fileName= UUID.randomUUID().toString();
         Path filePath=Paths.get(System.getProperty("user.home"),"mer-data","payements",fileName+".pdf");
         Files.copy(file.getInputStream(),filePath);
-        Student student=studentRepository.findByCode(studentCode);
+        Student student=studentRepository.findByCode(newPayementDTO.getStudentCode());
         Payement payement=new Payement();
         payement.setStudent(student);
-        payement.setDate(date);
-        payement.setAmount(amount);
-        payement.setType(type);
+        payement.setDate(newPayementDTO.getDate());
+        payement.setAmount(newPayementDTO.getAmount());
+        payement.setType(newPayementDTO.getType());
         payement.setFile(filePath.toUri().toString());
         return payementRepository.save(payement);
     }

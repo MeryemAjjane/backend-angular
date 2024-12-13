@@ -1,6 +1,7 @@
 package org.event.springangular.dtos;
 
 
+import org.event.springangular.entities.PayementStatus;
 import org.event.springangular.entities.PayementType;
 
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ public class NewPayementDTO {
 
    private double amount;
    private PayementType type;
+   private PayementStatus status;
    private LocalDate date;
    private String studentCode;
 
@@ -29,6 +31,14 @@ public class NewPayementDTO {
         this.type = type;
     }
 
+    public PayementStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PayementStatus status) {
+        this.status = status;
+    }
+
     public LocalDate getDate() {
         return date;
     }
@@ -45,9 +55,10 @@ public class NewPayementDTO {
         this.studentCode = studentCode;
     }
 
-    public NewPayementDTO(double amount, PayementType type, LocalDate date, String studentCode) {
+    public NewPayementDTO(double amount, PayementType type, PayementStatus status, LocalDate date, String studentCode) {
         this.amount = amount;
         this.type = type;
+        this.status=status;
         this.date = date;
         this.studentCode = studentCode;
     }

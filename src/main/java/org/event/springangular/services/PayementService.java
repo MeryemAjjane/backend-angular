@@ -48,6 +48,7 @@ public class PayementService {
         payement.setDate(newPayementDTO.getDate());
         payement.setAmount(newPayementDTO.getAmount());
         payement.setType(newPayementDTO.getType());
+        payement.setStatus(newPayementDTO.getStatus());
         payement.setFile(filePath.toUri().toString());
         return payementRepository.save(payement);
     }
